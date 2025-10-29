@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Force cornsilk background in light mode */
+@layer base {
+  :root {
+    --color-light-bg: 255 248 220; /* Cornsilk RGB */
+    --color-light-surface: 255 248 220;
+  }
+
+  body {
+    background-color: #fff8dc !important;
+  }
+}
+
+/* Global Styles */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  @apply dark:bg-dark-bg text-light-text dark:text-dark-text;
+  background-color: #fff8dc; /* Cornsilk for light mode */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Background Grid Pattern */
+.bg-grid-pattern {
+  background-image: linear-gradient(to right, currentColor 1px, transparent 1px),
+    linear-gradient(to bottom, currentColor 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Custom Utility Classes */
+@layer utilities {
+  .container-max {
+    @apply max-w-7xl mx-auto px-4;
+  }
+
+  .surface {
+    @apply bg-light-surface dark:bg-dark-surface;
+  }
+
+  .border-theme {
+    @apply border-light-border dark:border-dark-border;
+  }
+
+  .text-primary {
+    @apply text-light-text dark:text-dark-text;
+  }
+
+  .text-secondary {
+    @apply text-light-text-secondary dark:text-dark-text-secondary;
+  }
+
+  .btn-accent {
+    @apply bg-accent hover:bg-accent-hover active:bg-accent-pressed text-dark-bg font-medium px-4 py-2 rounded-md transition-all duration-200 shadow-sm hover:shadow-md;
+  }
+
+  .btn-gradient {
+    @apply bg-gradient-signature text-white font-medium px-4 py-2 rounded-md transition-all duration-200 hover:opacity-90 shadow-sm hover:shadow-md;
+  }
+
+  .card {
+    @apply surface border border-theme rounded-lg shadow-sm;
+  }
+
+  .glow-accent {
+    transition: box-shadow 0.3s ease;
+  }
+
+  .glow-accent:hover {
+    box-shadow: 0 0 20px rgba(0, 255, 198, 0.5);
+  }
+
+  .glow-neon-blue {
+    box-shadow: 0 0 20px rgba(0, 120, 255, 0.3);
+  }
+
+  .glow-neon-magenta {
+    box-shadow: 0 0 20px rgba(179, 0, 255, 0.3);
+  }
+}
+
+/* Smooth Transitions */
+button,
+a,
+input,
+textarea {
+  transition-property: background-color, border-color, color, opacity;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-light-bg dark:bg-dark-bg;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-light-muted dark:bg-dark-muted rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-accent;
+}

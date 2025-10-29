@@ -1,0 +1,363 @@
+/**
+ * Nirmaan UI Theme System
+ * CSS Variables for Light & Dark Modes
+ * Used for preview consistency across components
+ */
+
+/* ===========================
+   BASE THEME VARIABLES (Light Mode)
+   =========================== */
+:root {
+  /* Primary Accent Colors */
+  --accent: #1abc9c;
+  --accent-hover: #16a085;
+  --accent-glow: rgba(26, 188, 156, 0.6);
+
+  /* Surface & Background */
+  --surface: #fff8dc;
+  --bg: #fff8dc; /* Cornsilk - warm light mode background */
+  --bg-rgb: 255, 248, 220; /* RGB values for rgba() usage */
+  --light-surface: #fff8dc;
+
+  /* Text Colors */
+  --text: #111827;
+  --text-secondary: #6b7280;
+
+  /* Borders */
+  --border: #e5e7eb;
+  --border-theme: 1px solid var(--border);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 20px var(--accent-glow);
+
+  /* Neon Colors (Light Mode - Vibrant) */
+  --neon-cyan: #00d5ff;
+  --neon-purple: #a14bff;
+  --neon-pink: #ff3ec9;
+  --neon-green: #2dff72;
+  --neon-yellow: #ffd300;
+  --neon-orange: #ff8a00;
+  --neon-red: #ff4f4f;
+  --neon-blue: #4f6bff;
+  --neon-amber: #ffba08;
+  --neon-rose: #ff5e8e;
+}
+
+/* ===========================
+   DARK THEME VARIABLES
+   =========================== */
+[data-theme="dark"] {
+  /* Primary Accent Colors */
+  --accent: #00ffc6;
+  --accent-hover: #00e6b3;
+  --accent-glow: rgba(0, 255, 198, 0.6);
+
+  /* Surface & Background */
+  --surface: #1f1f23;
+  --bg: #050507;
+  --light-surface: #2a2a2f;
+
+  /* Text Colors */
+  --text: #f9fafb;
+  --text-secondary: #9ca3af;
+
+  /* Borders */
+  --border: #374151;
+  --border-theme: 1px solid var(--border);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 20px var(--accent-glow);
+
+  /* Neon Colors (Dark Mode) */
+  --neon-cyan: #00ffc6;
+  --neon-purple: #c77dff;
+  --neon-pink: #ff006e;
+  --neon-green: #39ff14;
+  --neon-yellow: #ffea00;
+  --neon-orange: #ff6d00;
+  --neon-red: #ff0844;
+  --neon-blue: #0096ff;
+  --neon-amber: #ffa500;
+  --neon-rose: #ff69b4;
+}
+
+/* ===========================
+   CUSTOM CLASS MAPPINGS
+   (For Nirmaan UI Components)
+   =========================== */
+
+/* Surface Classes */
+.surface {
+  background-color: var(--surface);
+  color: var(--text);
+}
+
+.bg-surface {
+  background-color: var(--surface);
+}
+
+.bg-light-bg {
+  background-color: var(--bg);
+}
+
+.bg-light-surface {
+  background-color: var(--light-surface);
+}
+
+.bg-dark-bg {
+  background-color: var(--bg);
+}
+
+.bg-dark-surface {
+  background-color: var(--surface);
+}
+
+/* Text Classes */
+.text-accent {
+  color: var(--accent);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-light-text {
+  color: var(--text);
+}
+
+.text-dark-text {
+  color: var(--text);
+}
+
+/* Border Classes */
+.border-theme {
+  border: var(--border-theme);
+}
+
+.border-light-border {
+  border-color: var(--border);
+}
+
+.border-dark-border {
+  border-color: var(--border);
+}
+
+/* Glow Effects */
+.glow-accent {
+  text-shadow: 0 0 10px var(--accent-glow);
+}
+
+.shadow-glow-accent {
+  box-shadow: var(--shadow-glow);
+}
+
+/* Button Accent */
+.btn-accent {
+  background-color: var(--accent);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-accent:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Neon Color Classes */
+.text-neon-cyan {
+  color: var(--neon-cyan);
+}
+.text-neon-purple {
+  color: var(--neon-purple);
+}
+.text-neon-pink {
+  color: var(--neon-pink);
+}
+.text-neon-green {
+  color: var(--neon-green);
+}
+.text-neon-yellow {
+  color: var(--neon-yellow);
+}
+.text-neon-orange {
+  color: var(--neon-orange);
+}
+.text-neon-red {
+  color: var(--neon-red);
+}
+.text-neon-blue {
+  color: var(--neon-blue);
+}
+.text-neon-amber {
+  color: var(--neon-amber);
+}
+.text-neon-rose {
+  color: var(--neon-rose);
+}
+
+.bg-neon-cyan {
+  background-color: var(--neon-cyan);
+}
+.bg-neon-purple {
+  background-color: var(--neon-purple);
+}
+.bg-neon-pink {
+  background-color: var(--neon-pink);
+}
+.bg-neon-green {
+  background-color: var(--neon-green);
+}
+.bg-neon-yellow {
+  background-color: var(--neon-yellow);
+}
+.bg-neon-orange {
+  background-color: var(--neon-orange);
+}
+.bg-neon-red {
+  background-color: var(--neon-red);
+}
+.bg-neon-blue {
+  background-color: var(--neon-blue);
+}
+.bg-neon-amber {
+  background-color: var(--neon-amber);
+}
+.bg-neon-rose {
+  background-color: var(--neon-rose);
+}
+
+/* Opacity Variants */
+.bg-accent\/10 {
+  background-color: rgba(var(--accent-rgb), 0.1);
+}
+.bg-accent\/20 {
+  background-color: rgba(var(--accent-rgb), 0.2);
+}
+.bg-accent\/30 {
+  background-color: rgba(var(--accent-rgb), 0.3);
+}
+
+.bg-neon-red\/10 {
+  background-color: rgba(255, 79, 79, 0.1);
+}
+.bg-neon-red\/20 {
+  background-color: rgba(255, 79, 79, 0.2);
+}
+.bg-neon-red\/30 {
+  background-color: rgba(255, 79, 79, 0.3);
+}
+
+.border-accent\/30 {
+  border-color: rgba(var(--accent-rgb), 0.3);
+}
+.border-neon-red\/30 {
+  border-color: rgba(255, 79, 79, 0.3);
+}
+
+/* ===========================
+   UTILITY CLASSES
+   =========================== */
+
+/* Container Max Width */
+.container-max {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Gradient Backgrounds */
+.gradient-accent {
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+}
+
+.gradient-surface {
+  background: linear-gradient(to bottom right, var(--bg), var(--surface));
+}
+
+/* Transitions */
+.transition-all {
+  transition: all 0.2s ease-in-out;
+}
+
+.transition-colors {
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
+}
+
+.transition-transform {
+  transition: transform 0.2s ease-in-out;
+}
+
+/* ===========================
+   PREVIEW-SPECIFIC STYLES
+   =========================== */
+
+/* Ensure box-sizing for all preview elements */
+.preview-container * {
+  box-sizing: border-box;
+}
+
+/* Preview wrapper styling */
+.preview-wrapper {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100%;
+  padding: 2rem;
+}
+
+/* Remove default margins */
+.preview-container h1,
+.preview-container h2,
+.preview-container h3,
+.preview-container p {
+  margin: 0;
+  padding: 0;
+}
+
+/* ===========================
+   RESPONSIVE UTILITIES
+   =========================== */
+
+@media (max-width: 768px) {
+  .container-max {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .preview-wrapper {
+    padding: 1rem;
+  }
+}
+
+/* ===========================
+   ACCESSIBILITY
+   =========================== */
+
+/* Focus visible for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Reduced motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
