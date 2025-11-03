@@ -45,25 +45,32 @@ export default function ComponentLivePreview({ code, className = "" }) {
 
   // Security: Sanitize code to prevent malicious scripts
   const sanitizeCode = (rawCode) => {
-    // Check for dangerous patterns (only check, don't modify code)
+    console.log("🔍 Checking code for dangerous patterns...");
+
+    // Only block TRULY dangerous patterns that can steal data or execute arbitrary code
     const dangerousPatterns = [
-      /window\.location/gi,
-      /document\.cookie/gi,
-      /eval\s*\(/gi,
-      /Function\s*\(/gi,
-      /<script[\s>]/gi,
-      /javascript:\s*void/gi,
-      /XMLHttpRequest/gi,
-      /\.then\s*\(\s*fetch/gi, // fetch in promise chain
+      { pattern: /document\.cookie/gi, name: "Cookie access" },
+      {
+        pattern: /localStorage\.(getItem|setItem).*['"]token['"]/gi,
+        name: "Token theft",
+      },
+      { pattern: /\beval\s*\(/gi, name: "eval() execution" },
+      { pattern: /new\s+Function\s*\(/g, name: "Function constructor" },
+      { pattern: /<script[\s>]/gi, name: "Script injection" },
+      { pattern: /javascript:\s*void/gi, name: "JavaScript protocol" },
     ];
 
     // Only block truly dangerous patterns
-    for (const pattern of dangerousPatterns) {
-      if (pattern.test(rawCode)) {
-        console.warn("Blocked dangerous pattern:", pattern);
-        throw new Error("Code contains potentially unsafe patterns");
+    for (const { pattern, name } of dangerousPatterns) {
+      const match = rawCode.match(pattern);
+      if (match) {
+        console.error(`❌ Blocked: ${name}`);
+        console.error(`Matched text:`, match);
+        throw new Error(`Code contains potentially unsafe patterns: ${name}`);
       }
     }
+
+    console.log("✅ Code passed security checks!");
 
     // Transform code for react-live
     // react-live doesn't support "export default" directly

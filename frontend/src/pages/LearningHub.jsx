@@ -8,11 +8,8 @@ export default function LearningHub() {
     <section>
       <h2 className="text-2xl font-semibold mb-4">Learning Hub</h2>
       <p className="text-secondary mb-4">
-        Write notes in a rich editor. We'll later persist these to your account.
+        The team is working hard to create a rich learning experience for you.
       </p>
-      <div className="surface border-theme rounded-lg p-2">
-        <ReactQuill theme="snow" value={value} onChange={setValue} />
-      </div>
     </section>
   );
 }

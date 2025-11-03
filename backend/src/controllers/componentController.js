@@ -96,7 +96,7 @@ export async function getComponentById(req, res) {
   try {
     const component = await Component.findById(req.params.id).populate(
       "owner",
-      "name"
+      "name _id"
     );
 
     if (!component) {
@@ -152,9 +152,12 @@ export async function createComponent(req, res) {
       category,
       isPublic,
       tags,
+      previewImage,
       previewSettings,
       propsSchema,
     } = req.body;
+
+    console.log("📝 Creating component with previewImage:", previewImage);
 
     if (!title || !description || !code) {
       return res
@@ -201,6 +204,7 @@ export async function createComponent(req, res) {
       isPublic: isPublic !== undefined ? isPublic : true,
       owner: req.user._id,
       tags: tags || [],
+      previewImage: previewImage || null,
       previewSettings: previewSettings || {
         theme: "dark",
         useNirmaanTheme: true,

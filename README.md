@@ -96,4 +96,4 @@ Open issues and feature requests on GitHub. Join the community page to share sni
 
 ---
 
-Built with ❤️ using React, TailwindCSS, Framer Motion, and Express
+Built with using React, TailwindCSS, Framer Motion, and Express

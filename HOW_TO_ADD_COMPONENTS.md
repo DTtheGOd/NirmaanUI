@@ -181,7 +181,7 @@ Content-Type: application/json
 
 {
   "email": "your@email.com",
-  "password": "yourpassword"
+  "password": "your password"
 }
 ```
 
@@ -254,7 +254,7 @@ export default function AddComponent() {
 
 ---
 
-## 📝 **Quick Component Template**
+## **Quick Component Template**
 
 Copy this template for new components:
 

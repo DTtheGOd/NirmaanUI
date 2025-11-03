@@ -45,6 +45,7 @@ const componentSchema = new mongoose.Schema(
     copies: { type: Number, default: 0 },
     previewImage: { type: String },
     hasLivePreview: { type: Boolean, default: true },
+    isVisible: { type: Boolean, default: true }, // Admin can hide components
     tags: [{ type: String }],
     previewSettings: {
       theme: {

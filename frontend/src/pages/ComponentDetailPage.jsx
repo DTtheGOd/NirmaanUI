@@ -14,6 +14,21 @@ import {
   Sparkles,
   FileCode,
 } from "lucide-react";
+import {
+  AiFillHeart,
+  AiOutlineHeart,
+  AiOutlineEye,
+  AiOutlineCheck,
+  AiFillLock,
+} from "react-icons/ai";
+import {
+  BiCopy,
+  BiDownload,
+  BiSave,
+  BiEdit,
+  BiTrash,
+  BiGlobe,
+} from "react-icons/bi";
 
 export default function ComponentDetailPage() {
   const { id } = useParams();
@@ -38,7 +53,7 @@ export default function ComponentDetailPage() {
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/components/${id}`,
+        `${import.meta.env.VITE_API_URL}/components/${id}`,
         { headers }
       );
 
@@ -78,7 +93,7 @@ export default function ComponentDetailPage() {
       const token = localStorage.getItem("token");
       if (token) {
         await axios.post(
-          `${import.meta.env.VITE_API_URL}/api/components/${id}/copy`,
+          `${import.meta.env.VITE_API_URL}/components/${id}/copy`,
           {},
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -97,7 +112,7 @@ export default function ComponentDetailPage() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/components/${id}/like`,
+        `${import.meta.env.VITE_API_URL}/components/${id}/like`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -118,7 +133,7 @@ export default function ComponentDetailPage() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/components/${id}/save`,
+        `${import.meta.env.VITE_API_URL}/components/${id}/save`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -135,10 +150,9 @@ export default function ComponentDetailPage() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(
-        `${import.meta.env.VITE_API_URL}/api/components/${id}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await axios.delete(`${import.meta.env.VITE_API_URL}/components/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       navigate("/my-components");
     } catch (error) {
@@ -187,8 +201,9 @@ export default function ComponentDetailPage() {
                   {component.category}
                 </span>
                 {!component.isPublic && (
-                  <span className="px-3 py-1 text-sm rounded-full bg-neon-amber/20 text-neon-amber">
-                    🔒 Private
+                  <span className="px-3 py-1 text-sm rounded-full bg-neon-amber/20 text-neon-amber flex items-center gap-1">
+                    <AiFillLock className="w-3 h-3" />
+                    Private
                   </span>
                 )}
               </div>
@@ -203,15 +218,17 @@ export default function ComponentDetailPage() {
               <div className="flex items-center gap-2">
                 <Link
                   to={`/component/${id}/edit`}
-                  className="surface border-theme px-4 py-2 rounded-md hover:bg-light-surface dark:hover:bg-dark-surface transition-colors"
+                  className="surface border-theme px-4 py-2 rounded-md hover:bg-light-surface dark:hover:bg-dark-surface transition-colors flex items-center gap-2"
                 >
-                  ✏️ Edit
+                  <BiEdit className="w-4 h-4" />
+                  Edit
                 </Link>
                 <button
                   onClick={handleDelete}
-                  className="surface border-theme px-4 py-2 rounded-md hover:bg-neon-red/10 text-neon-red transition-colors"
+                  className="surface border-theme px-4 py-2 rounded-md hover:bg-neon-red/10 text-neon-red transition-colors flex items-center gap-2"
                 >
-                  🗑️ Delete
+                  <BiTrash className="w-4 h-4" />
+                  Delete
                 </button>
               </div>
             )}
@@ -222,35 +239,80 @@ export default function ComponentDetailPage() {
           {/* Stats and Actions */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-6 text-sm text-secondary">
-              <span>❤️ {likeCount} likes</span>
-              <span>📥 {saveCount} saves</span>
-              <span>👁️ {component.views} views</span>
-              <span>📋 {component.copies || 0} copies</span>
+              <span className="flex items-center gap-1">
+                <AiFillHeart className="w-4 h-4" />
+                {likeCount} likes
+              </span>
+              <span className="flex items-center gap-1">
+                <BiDownload className="w-4 h-4" />
+                {saveCount} saves
+              </span>
+              <span className="flex items-center gap-1">
+                <AiOutlineEye className="w-4 h-4" />
+                {component.views} views
+              </span>
+              <span className="flex items-center gap-1">
+                <BiCopy className="w-4 h-4" />
+                {component.copies || 0} copies
+              </span>
             </div>
 
             <div className="flex items-center gap-2">
               <button
                 onClick={handleLike}
-                className={`px-4 py-2 rounded-md transition-all ${
+                className={`px-4 py-2 rounded-md transition-all flex items-center gap-2 ${
                   isLiked
                     ? "bg-neon-red/20 text-neon-red"
                     : "surface border-theme hover:bg-light-surface dark:hover:bg-dark-surface"
                 }`}
               >
-                {isLiked ? "❤️ Liked" : "🤍 Like"}
+                {isLiked ? (
+                  <>
+                    <AiFillHeart className="w-4 h-4" />
+                    Liked
+                  </>
+                ) : (
+                  <>
+                    <AiOutlineHeart className="w-4 h-4" />
+                    Like
+                  </>
+                )}
               </button>
               <button
                 onClick={handleSave}
-                className={`px-4 py-2 rounded-md transition-all ${
+                className={`px-4 py-2 rounded-md transition-all flex items-center gap-2 ${
                   isSaved
                     ? "bg-accent/20 text-accent"
                     : "surface border-theme hover:bg-light-surface dark:hover:bg-dark-surface"
                 }`}
               >
-                {isSaved ? "📥 Saved" : "💾 Save"}
+                {isSaved ? (
+                  <>
+                    <BiDownload className="w-4 h-4" />
+                    Saved
+                  </>
+                ) : (
+                  <>
+                    <BiSave className="w-4 h-4" />
+                    Save
+                  </>
+                )}
               </button>
-              <button onClick={handleCopy} className="btn-accent px-6 py-2">
-                {copied ? "✅ Copied!" : "📋 Copy Code"}
+              <button
+                onClick={handleCopy}
+                className="btn-accent px-6 py-2 flex items-center gap-2"
+              >
+                {copied ? (
+                  <>
+                    <AiOutlineCheck className="w-4 h-4" />
+                    Copied!
+                  </>
+                ) : (
+                  <>
+                    <BiCopy className="w-4 h-4" />
+                    Copy Code
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -365,17 +427,33 @@ export default function ComponentDetailPage() {
 
                   {/* Live Preview Component */}
                   <div className="p-8 bg-gradient-to-br from-light-bg to-light-surface dark:from-dark-bg dark:to-dark-surface min-h-[400px]">
-                    <PreviewContainer
-                      code={component.code}
-                      theme={previewTheme}
-                      useNirmaanTheme={previewMode === "nirmaan"}
-                      showThemeToggle={true}
-                      props={previewProps}
-                      height="400px"
-                      onError={(error) =>
-                        console.error("Preview error:", error)
-                      }
-                    />
+                    {component.previewImage ? (
+                      /* Show uploaded preview image */
+                      <div className="flex flex-col items-center justify-center h-full">
+                        <img
+                          src={component.previewImage}
+                          alt={`${component.title} preview`}
+                          className="max-w-full max-h-[500px] object-contain rounded-lg shadow-lg"
+                        />
+                        <p className="text-xs text-secondary mt-4">
+                          📸 Static preview image (Live preview requires
+                          sandboxing)
+                        </p>
+                      </div>
+                    ) : (
+                      /* Fallback to live preview */
+                      <PreviewContainer
+                        code={component.code}
+                        theme={previewTheme}
+                        useNirmaanTheme={previewMode === "nirmaan"}
+                        showThemeToggle={true}
+                        props={previewProps}
+                        height="400px"
+                        onError={(error) =>
+                          console.error("Preview error:", error)
+                        }
+                      />
+                    )}
                   </div>
 
                   {/* Props Playground */}
@@ -410,9 +488,19 @@ export default function ComponentDetailPage() {
                   </h2>
                   <button
                     onClick={handleCopy}
-                    className="text-sm text-accent glow-accent hover:underline"
+                    className="text-sm text-accent glow-accent hover:underline flex items-center gap-1"
                   >
-                    {copied ? "✅ Copied" : "📋 Copy"}
+                    {copied ? (
+                      <>
+                        <AiOutlineCheck className="w-4 h-4" />
+                        Copied
+                      </>
+                    ) : (
+                      <>
+                        <BiCopy className="w-4 h-4" />
+                        Copy
+                      </>
+                    )}
                   </button>
                 </div>
                 <pre className="bg-light-surface dark:bg-dark-surface text-light-text dark:text-dark-text rounded-lg p-6 overflow-auto text-sm border border-light-border dark:border-dark-border font-mono max-h-[600px]">
@@ -460,13 +548,23 @@ export default function ComponentDetailPage() {
                         Visibility
                       </h3>
                       <span
-                        className={`px-3 py-1 text-sm rounded-full inline-block ${
+                        className={`px-3 py-1 text-sm rounded-full inline-flex items-center gap-1 ${
                           component.isPublic
                             ? "bg-accent/20 text-accent"
                             : "bg-neon-amber/20 text-neon-amber"
                         }`}
                       >
-                        {component.isPublic ? "🌍 Public" : "🔒 Private"}
+                        {component.isPublic ? (
+                          <>
+                            <BiGlobe className="w-4 h-4" />
+                            Public
+                          </>
+                        ) : (
+                          <>
+                            <AiFillLock className="w-4 h-4" />
+                            Private
+                          </>
+                        )}
                       </span>
                     </div>
                     <div>
@@ -495,16 +593,18 @@ export default function ComponentDetailPage() {
                         <div className="text-2xl font-bold text-accent">
                           {likeCount}
                         </div>
-                        <div className="text-xs text-secondary mt-1">
-                          ❤️ Likes
+                        <div className="text-xs text-secondary mt-1 flex items-center justify-center gap-1">
+                          <AiFillHeart className="w-3 h-3" />
+                          Likes
                         </div>
                       </div>
                       <div className="text-center p-3 rounded-lg surface border-theme">
                         <div className="text-2xl font-bold text-accent">
                           {saveCount}
                         </div>
-                        <div className="text-xs text-secondary mt-1">
-                          📥 Saves
+                        <div className="text-xs text-secondary mt-1 flex items-center justify-center gap-1">
+                          <BiDownload className="w-3 h-3" />
+                          Saves
                         </div>
                       </div>
                       <div className="text-center p-3 rounded-lg surface border-theme">
@@ -556,9 +656,19 @@ export default function ComponentDetailPage() {
             <h2 className="text-lg font-semibold">Component Code</h2>
             <button
               onClick={handleCopy}
-              className="text-sm text-accent glow-accent hover:underline"
+              className="text-sm text-accent glow-accent hover:underline flex items-center gap-1"
             >
-              {copied ? "✅ Copied" : "📋 Copy"}
+              {copied ? (
+                <>
+                  <AiOutlineCheck className="w-4 h-4" />
+                  Copied
+                </>
+              ) : (
+                <>
+                  <BiCopy className="w-4 h-4" />
+                  Copy
+                </>
+              )}
             </button>
           </div>
           <pre className="bg-light-surface dark:bg-dark-surface text-light-text dark:text-dark-text rounded-lg p-6 overflow-auto text-sm border border-light-border dark:border-dark-border font-mono">

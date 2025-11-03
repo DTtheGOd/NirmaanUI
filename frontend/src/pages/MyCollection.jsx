@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { AiFillHeart, AiOutlineEye } from "react-icons/ai";
+import { BiDownload, BiSearch } from "react-icons/bi";
 
 export default function MyCollection() {
   const [activeTab, setActiveTab] = useState("liked"); // "liked" or "saved"
@@ -20,10 +22,10 @@ export default function MyCollection() {
 
       // Fetch both liked and saved components
       const [likedRes, savedRes] = await Promise.all([
-        axios.get(`${import.meta.env.VITE_API_URL}/api/components/user/likes`, {
+        axios.get(`${import.meta.env.VITE_API_URL}/components/user/likes`, {
           headers,
         }),
-        axios.get(`${import.meta.env.VITE_API_URL}/api/components/user/saves`, {
+        axios.get(`${import.meta.env.VITE_API_URL}/components/user/saves`, {
           headers,
         }),
       ]);
@@ -72,23 +74,25 @@ export default function MyCollection() {
         <div className="flex gap-2 mb-6 border-b border-theme">
           <button
             onClick={() => setActiveTab("liked")}
-            className={`px-6 py-3 font-medium transition-all ${
+            className={`px-6 py-3 font-medium transition-all flex items-center gap-2 ${
               activeTab === "liked"
                 ? "text-accent border-b-2 border-accent"
                 : "text-secondary hover:text-primary"
             }`}
           >
-            ❤️ Liked ({likedComponents.length})
+            <AiFillHeart className="w-4 h-4" />
+            Liked ({likedComponents.length})
           </button>
           <button
             onClick={() => setActiveTab("saved")}
-            className={`px-6 py-3 font-medium transition-all ${
+            className={`px-6 py-3 font-medium transition-all flex items-center gap-2 ${
               activeTab === "saved"
                 ? "text-accent border-b-2 border-accent"
                 : "text-secondary hover:text-primary"
             }`}
           >
-            📥 Saved ({savedComponents.length})
+            <BiDownload className="w-4 h-4" />
+            Saved ({savedComponents.length})
           </button>
         </div>
 
@@ -105,8 +109,12 @@ export default function MyCollection() {
                 ? "Like components from the Explore page to see them here"
                 : "Save components from the Explore page to see them here"}
             </p>
-            <Link to="/explore" className="btn-accent inline-block">
-              🔍 Explore Components
+            <Link
+              to="/explore"
+              className="btn-accent inline-flex items-center gap-2"
+            >
+              <BiSearch className="w-4 h-4" />
+              Explore Components
             </Link>
           </div>
         ) : (
@@ -143,10 +151,12 @@ export default function MyCollection() {
                   <div className="flex items-center justify-between text-sm text-secondary">
                     <div className="flex items-center gap-4">
                       <span className="flex items-center gap-1">
-                        ❤️ {component.likeCount || 0}
+                        <AiFillHeart className="w-4 h-4" />
+                        {component.likeCount || 0}
                       </span>
                       <span className="flex items-center gap-1">
-                        👁️ {component.views || 0}
+                        <AiOutlineEye className="w-4 h-4" />
+                        {component.views || 0}
                       </span>
                     </div>
                     <span className="text-xs">

@@ -23,6 +23,16 @@ export default function Register() {
 
   return (
     <section className="max-w-md mx-auto">
+      <div className="flex items-center justify-center gap-3 mb-6">
+        <img
+          src="/logo.png"
+          alt="Nirmaan UI Logo"
+          className="h-12 w-12 object-contain"
+        />
+        <span className="text-3xl font-bold bg-gradient-signature bg-clip-text text-transparent">
+          Nm
+        </span>
+      </div>
       <h2 className="text-2xl font-semibold mb-4">Register</h2>
       {error && <p className="text-neon-red text-sm mb-2">{error}</p>}
       <form

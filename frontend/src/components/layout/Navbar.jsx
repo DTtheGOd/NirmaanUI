@@ -46,9 +46,16 @@ export default function Navbar() {
       <nav className="w-full max-w-[1920px] mx-auto px-6 flex items-center justify-between py-3">
         <Link
           to={user ? "/home" : "/explore"}
-          className="font-bold text-2xl bg-gradient-signature bg-clip-text text-transparent hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
         >
-          {SITE_NAME}
+          <img
+            src="/logo.png"
+            alt="Nirmaan UI Logo"
+            className="h-8 w-8 object-contain"
+          />
+          <span className="font-bold text-2xl bg-gradient-signature bg-clip-text text-transparent">
+            Nm
+          </span>
         </Link>
 
         <div className="flex items-center gap-6">

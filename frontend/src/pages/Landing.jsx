@@ -65,17 +65,20 @@ function Hero() {
       {/* Two Column Layout */}
       <div className="relative z-10 container-max px-6 grid md:grid-cols-2 gap-12 items-center">
         {/* Left Side - Content */}
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col justify-center"
-        >
+        <div className="flex flex-col justify-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full surface border-theme mb-6 w-fit">
             <Sparkles className="w-4 h-4 text-accent" />
             <span className="text-sm font-medium">
               Hackathon-Ready Component Library
             </span>
+          </div>
+
+          <div className="flex items-center gap-4 mb-6">
+            <img
+              src="/logo.png"
+              alt="Nirmaan UI Logo"
+              className="h-20 w-20 md:h-24 md:w-24 object-contain"
+            />
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
@@ -118,15 +121,10 @@ function Hero() {
               Open source
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Right Side - 3D Model Placeholder */}
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex items-center justify-center relative"
-        >
+        <div className="flex items-center justify-center relative">
           <div className="relative w-full aspect-square max-w-lg">
             {/* Placeholder for Spline 3D or Screenshot */}
             <div className="w-full h-full surface border-theme rounded-2xl shadow-2xl overflow-hidden bg-gradient-to-br from-accent/5 to-neon-purple/5 flex items-center justify-center">
@@ -163,7 +161,7 @@ function Hero() {
               <p className="text-sm font-medium">Copy & Deploy</p>
             </motion.div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

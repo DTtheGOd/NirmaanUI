@@ -5,6 +5,8 @@ import axios from "axios";
 import { useTheme } from "../context/ThemeContext";
 import PreviewContainer from "../components/common/PreviewContainer";
 import { Eye, X, Copy } from "lucide-react";
+import { AiFillHeart, AiOutlineEye, AiOutlineCheck } from "react-icons/ai";
+import { BiSearch } from "react-icons/bi";
 
 const categories = [
   "All",
@@ -93,8 +95,8 @@ export default function Explore() {
     try {
       const res = await axios.get(
         `${
-          import.meta.env.VITE_API_URL || "http://localhost:5000"
-        }/api/components?sort=${sort}`
+          import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+        }/components?sort=${sort}`
       );
       setComponents(Array.isArray(res.data) ? res.data : []);
       setLoading(false);
@@ -188,13 +190,10 @@ export default function Explore() {
       >
         <div className="p-6">
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold bg-gradient-signature bg-clip-text text-transparent">
-              Explore
-            </h2>
+          <div className="flex items-center justify-end mb-6 lg:hidden">
             <button
               onClick={() => setIsSidebarOpen(false)}
-              className="lg:hidden p-2 rounded-md hover:bg-light-surface dark:hover:bg-dark-surface"
+              className="p-2 rounded-md hover:bg-light-surface dark:hover:bg-dark-surface"
             >
               ✕
             </button>
@@ -205,13 +204,16 @@ export default function Explore() {
             <label className="text-sm font-medium text-secondary mb-2 block">
               Search
             </label>
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="🔍 Search components..."
-              className="w-full surface border-theme rounded-md px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 placeholder:text-light-muted dark:placeholder:text-dark-muted"
-            />
+            <div className="relative">
+              <BiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-light-muted dark:text-dark-muted" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search components..."
+                className="w-full surface border-theme rounded-md pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 placeholder:text-light-muted dark:placeholder:text-dark-muted"
+              />
+            </div>
           </div>
 
           {/* Sort */}
@@ -328,38 +330,56 @@ export default function Explore() {
                 >
                   <Link
                     to={`/component/${component._id}`}
-                    className="block surface border-theme rounded-lg p-5 hover:shadow-lg transition-all"
+                    className="block surface border-theme rounded-lg overflow-hidden hover:shadow-lg transition-all"
                   >
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-lg group-hover:text-accent transition-colors">
-                          {component.title}
-                        </h3>
-                        <p className="text-xs text-secondary mt-1">
-                          by {component.owner?.name || "Anonymous"}
-                        </p>
+                    {/* Preview Image Thumbnail */}
+                    {component.previewImage && (
+                      <div className="relative w-full h-48 bg-gradient-to-br from-light-surface to-light-bg dark:from-dark-surface dark:to-dark-bg overflow-hidden">
+                        <img
+                          src={component.previewImage}
+                          alt={component.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                       </div>
-                      <span className="px-2 py-1 text-xs rounded-full surface border-theme">
-                        {component.category}
-                      </span>
-                    </div>
+                    )}
 
-                    <p className="text-sm text-secondary line-clamp-2 mb-4">
-                      {component.description}
-                    </p>
-
-                    <div className="flex items-center justify-between text-sm text-secondary">
-                      <div className="flex items-center gap-4">
-                        <span className="flex items-center gap-1">
-                          ❤️ {component.likeCount || 0}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          👁️ {component.views || 0}
+                    {/* Component Info */}
+                    <div className="p-5">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-lg group-hover:text-accent transition-colors">
+                            {component.title}
+                          </h3>
+                          <p className="text-xs text-secondary mt-1">
+                            by {component.owner?.name || "Anonymous"}
+                          </p>
+                        </div>
+                        <span className="px-2 py-1 text-xs rounded-full surface border-theme">
+                          {component.category}
                         </span>
                       </div>
-                      <span className="text-xs">
-                        {new Date(component.createdAt).toLocaleDateString()}
-                      </span>
+
+                      <p className="text-sm text-secondary line-clamp-2 mb-4">
+                        {component.description}
+                      </p>
+
+                      <div className="flex items-center justify-between text-sm text-secondary">
+                        <div className="flex items-center gap-4">
+                          <span className="flex items-center gap-1">
+                            <AiFillHeart className="w-4 h-4" />
+                            {component.likeCount || 0}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <AiOutlineEye className="w-4 h-4" />
+                            {component.views || 0}
+                          </span>
+                        </div>
+                        <span className="text-xs">
+                          {new Date(component.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
                     </div>
                   </Link>
 
@@ -424,7 +444,14 @@ export default function Explore() {
                   >
                     <Copy className="w-4 h-4" />
                     <span className="text-sm">
-                      {copied ? "✅ Copied" : "Copy Code"}
+                      {copied ? (
+                        <>
+                          <AiOutlineCheck className="w-4 h-4 inline mr-1" />
+                          Copied
+                        </>
+                      ) : (
+                        "Copy Code"
+                      )}
                     </span>
                   </button>
 
@@ -449,19 +476,34 @@ export default function Explore() {
               {/* Modal Body - Preview */}
               <div className="flex-1 overflow-auto p-6 bg-gradient-to-br from-light-bg to-light-surface dark:from-dark-bg dark:to-dark-surface">
                 <div className="max-w-5xl mx-auto">
-                  <PreviewContainer
-                    code={previewModal.component.code}
-                    theme={
-                      previewModal.component.previewSettings?.theme || "dark"
-                    }
-                    useNirmaanTheme={
-                      previewModal.component.previewSettings
-                        ?.useNirmaanTheme !== false
-                    }
-                    showThemeToggle={true}
-                    height="500px"
-                    className="h-full"
-                  />
+                  {previewModal.component.previewImage ? (
+                    /* Show uploaded preview image */
+                    <div className="flex flex-col items-center justify-center min-h-[500px]">
+                      <img
+                        src={previewModal.component.previewImage}
+                        alt={`${previewModal.component.title} preview`}
+                        className="max-w-full max-h-[600px] object-contain rounded-lg shadow-2xl"
+                      />
+                      <p className="text-xs text-secondary mt-4">
+                        📸 Static preview image
+                      </p>
+                    </div>
+                  ) : (
+                    /* Fallback to live preview */
+                    <PreviewContainer
+                      code={previewModal.component.code}
+                      theme={
+                        previewModal.component.previewSettings?.theme || "dark"
+                      }
+                      useNirmaanTheme={
+                        previewModal.component.previewSettings
+                          ?.useNirmaanTheme !== false
+                      }
+                      showThemeToggle={true}
+                      height="500px"
+                      className="h-full"
+                    />
+                  )}
                 </div>
               </div>
 
@@ -470,8 +512,14 @@ export default function Explore() {
                 <div className="flex items-center justify-between">
                   <p>{previewModal.component.description}</p>
                   <div className="flex items-center gap-4">
-                    <span>❤️ {previewModal.component.likeCount || 0}</span>
-                    <span>👁️ {previewModal.component.views || 0}</span>
+                    <span className="flex items-center gap-1">
+                      <AiFillHeart className="w-4 h-4" />
+                      {previewModal.component.likeCount || 0}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <AiOutlineEye className="w-4 h-4" />
+                      {previewModal.component.views || 0}
+                    </span>
                   </div>
                 </div>
               </div>

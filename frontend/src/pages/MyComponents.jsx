@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { AiFillHeart, AiOutlineEye, AiFillLock } from "react-icons/ai";
+import { BiCopy, BiRocket } from "react-icons/bi";
 
 export default function MyComponents() {
   const [components, setComponents] = useState([]);
@@ -15,7 +17,7 @@ export default function MyComponents() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/components/user/my-components`,
+        `${import.meta.env.VITE_API_URL}/components/user/my-components`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setComponents(res.data);
@@ -64,8 +66,12 @@ export default function MyComponents() {
             <p className="text-secondary text-sm mb-6">
               Start by uploading your first component!
             </p>
-            <Link to="/upload" className="btn-accent inline-block">
-              🚀 Upload Component
+            <Link
+              to="/upload"
+              className="btn-accent inline-flex items-center gap-2"
+            >
+              <BiRocket className="w-4 h-4" />
+              Upload Component
             </Link>
           </div>
         ) : (
@@ -91,10 +97,14 @@ export default function MyComponents() {
                         {component.category}
                       </span>
                       {component.isPublic ? (
-                        <span className="text-xs text-accent">🌍 Public</span>
+                        <span className="text-xs text-accent flex items-center gap-1">
+                          <BiCopy className="w-3 h-3" />
+                          Public
+                        </span>
                       ) : (
-                        <span className="text-xs text-neon-amber">
-                          🔒 Private
+                        <span className="text-xs text-neon-amber flex items-center gap-1">
+                          <AiFillLock className="w-3 h-3" />
+                          Private
                         </span>
                       )}
                     </div>
@@ -107,9 +117,18 @@ export default function MyComponents() {
 
                 <div className="flex items-center justify-between text-sm text-secondary mb-4">
                   <div className="flex items-center gap-4">
-                    <span>❤️ {component.likeCount || 0}</span>
-                    <span>👁️ {component.views || 0}</span>
-                    <span>📋 {component.copies || 0}</span>
+                    <span className="flex items-center gap-1">
+                      <AiFillHeart className="w-4 h-4" />
+                      {component.likeCount || 0}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <AiOutlineEye className="w-4 h-4" />
+                      {component.views || 0}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <BiCopy className="w-4 h-4" />
+                      {component.copies || 0}
+                    </span>
                   </div>
                 </div>
 
