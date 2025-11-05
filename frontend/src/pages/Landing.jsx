@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import ThemeToggle from "../components/ui/ThemeToggle";
 import DotGrid from "../components/common/DotGrid";
+import PageAssembly from "../components/common/PageAssembly";
 
 export default function Landing() {
   return (
@@ -123,43 +124,11 @@ function Hero() {
           </div>
         </div>
 
-        {/* Right Side - 3D Model Placeholder */}
-        <div className="flex items-center justify-center relative">
-          <div className="relative w-full aspect-square max-w-lg">
-            {/* Placeholder for Spline 3D or Screenshot */}
-            <div className="w-full h-full surface border-theme rounded-2xl shadow-2xl overflow-hidden bg-gradient-to-br from-accent/5 to-neon-purple/5 flex items-center justify-center">
-              <div className="text-center p-8">
-                <LayoutGrid className="w-32 h-32 mx-auto text-accent/30 mb-4" />
-                <p className="text-secondary text-sm">
-                  Hero visual placeholder - Add Spline 3D or screenshot here
-                </p>
-              </div>
-            </div>
-
-            {/* Floating Card - React + Tailwind */}
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-4 -left-4 surface border-theme rounded-lg p-4 shadow-lg"
-            >
-              <Code className="w-8 h-8 text-accent mb-2" />
-              <p className="text-sm font-medium">React + Tailwind</p>
-            </motion.div>
-
-            {/* Floating Card - Copy & Deploy */}
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 0.5,
-              }}
-              className="absolute -bottom-4 -right-4 surface border-theme rounded-lg p-4 shadow-lg"
-            >
-              <Zap className="w-8 h-8 text-neon-yellow mb-2" />
-              <p className="text-sm font-medium">Copy & Deploy</p>
-            </motion.div>
+        {/* Right Side - Dynamic Page Assembly Animation */}
+        <div className="flex items-center justify-center relative min-h-[500px]">
+          {/* Page Assembly Animation - Better positioned */}
+          <div className="absolute inset-0 flex items-center justify-center pt-12">
+            <PageAssembly />
           </div>
         </div>
       </div>
